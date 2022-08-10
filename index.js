@@ -9,27 +9,27 @@ let todoItems = [];
 
 
 
-const deleteItem = function(itemNo){
-    console.log("remove Index :",itemNo);
-    todoItems.splice(itemNo,1);
+const deleteItem = function (itemNo) {
+    console.log("remove Index :", itemNo);
+    todoItems.splice(itemNo, 1);
     getList(todoItems);
 }
 
-const editItem = function(itemNo,item){
-    console.log("Edit Index :",itemNo);
-    console.log("Edit Index Name :",item);
+const editItem = function (itemNo, item) {
+    console.log("Edit Index :", itemNo);
+    console.log("Edit Index Name :", item);
     itemInput.value = item;
-    todoItems.splice(itemNo,1);
+    todoItems.splice(itemNo, 1);
     getList(todoItems);
 }
 
-const markItem = function(itemNo, strikeFlag){
-    console.log("mark Index :",itemNo);
-    console.log("mark index flag :",strikeFlag);
-    if(strikeFlag==0){
-        todoItems[itemNo][1]=1;
-    }else{
-        todoItems[itemNo][1]=0;
+const markItem = function (itemNo, strikeFlag) {
+    console.log("mark Index :", itemNo);
+    console.log("mark index flag :", strikeFlag);
+    if (strikeFlag == 0) {
+        todoItems[itemNo][1] = 1;
+    } else {
+        todoItems[itemNo][1] = 0;
     }
     getList(todoItems);
 }
@@ -40,19 +40,21 @@ const markItem = function(itemNo, strikeFlag){
 const getList = function (todoItems) {
     itemList.innerHTML = '';
 
-    let itemNo=0;
-    for(let i=0; i<todoItems.length;i++){
+    let itemNo = 0;
+    for (let i = 0; i < todoItems.length; i++) {
         itemList.insertAdjacentHTML('beforeend', `
-        <div class="item my-2 d-sm-flex justify-content-around">
-          ${todoItems[i][1]==1 ? `<h5 class="item-name text-capitalize text-decoration-line-through">${todoItems[i][0]}<h5>` : `<h5 class="item-name text-capitalize">${todoItems[i][0]}</h5>`}
-          <div class="item-icons">
+        <div class="item my-2 d-sm-flex row">
+          <div class="col-sm-6">
+            ${todoItems[i][1] == 1 ? `<h5 class="item-name text-capitalize text-decoration-line-through">${todoItems[i][0]}<h5>` : `<h5 class="item-name text-capitalize">${todoItems[i][0]}</h5>`}
+          </div>
+          <div class="item-icons col-sm-6">
             <a href="#" onclick="markItem(${itemNo}, ${todoItems[i][1]})" class="complete-item mx-2 item-icon"><i class="far fa-check-circle"></i></a>
             <a href="#" onclick="editItem(${itemNo},'${todoItems[i][0]}')" class="edit-item mx-2 item-icon"><i class="far fa-edit"></i></a>
             <a href="#" onclick="deleteItem(${itemNo})" class="delete-item item-icon"><i class="far fa-times-circle"></i></a>
           </div>
         </div>`);
         itemNo++;
-        
+
     }
 }
 
@@ -62,16 +64,16 @@ const getList = function (todoItems) {
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     const itemName = itemInput.value;
-    
+
 
     if (itemName.length === 0) {
 
     } else {
-        todoItems.push([itemName,0]);
+        todoItems.push([itemName, 0]);
         getList(todoItems);
-        
+
     }
-    
+
 
     itemInput.value = '';
 
